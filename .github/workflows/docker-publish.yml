@@ -115,4 +115,6 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        run: echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" | xargs -I {} cosign sign {}@${{ steps.build-and-push-amd64.outputs.digest }}
+        run: |
+          echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:amd64" | xargs -I {} cosign sign {}@${{ steps.build-and-push-amd64.outputs.digest }}
+          echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:arm64" | xargs -I {} cosign sign {}@${{ steps.build-and-push-arm64.outputs.digest }}
